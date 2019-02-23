@@ -68,7 +68,7 @@ uint32_t dspLib_Signals_Sin(uint32_t samplingFrequency, uint32_t phase, uint32_t
 	i_index = 0;
 	numSamples = numSamples - n_index;
 	while(i_index < numSamples) {
-		pOutSamples[n_index + i_index] = pOutSamples[i_index];
+		pOutSamples[n_index + i_index] = -pOutSamples[i_index];
 		i_index++;
 	}
 	

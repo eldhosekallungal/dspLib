@@ -14,5 +14,8 @@ dspLib_Math.o :
 dspLib_Signals.o :
 	gcc $(CFLAGS) -c ../src/signals/dspLib_Signals.c $(INCLUDE_PATH)
 
+shared_lib : dspLib_Math.o dspLib_Signals.o
+	gcc -shared -o libDspLib.so dspLib_Math.o dspLib_Signals.o
+
 clean:
 	rm -rf *.o *.exe
