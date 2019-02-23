@@ -72,5 +72,5 @@ uint32_t dspLib_Signals_Sin(uint32_t samplingFrequency, uint32_t phase, uint32_t
 		i_index++;
 	}
 	
-	return 
+	return 0;
 }

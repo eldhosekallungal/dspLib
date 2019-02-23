@@ -67,11 +67,30 @@
 #define CORDIC_GAIN_ITR23	652032874
 #define CORDIC_GAIN_ITR24	652032874
 #define CORDIC_GAIN_ITR25	652032874
-
-
-
+/**
+ * function : dspLib_Math_Cordic
+ * \brief function will give the new rotated co-ordinates.
+ * \param x_0 [in] int32_t : x co-ordinate.
+ *		  y_0 [in] int32_t : y co-ordinate.
+ *		  pX  [out] int32_t pointer : pointer to rotated x co-ordinate.
+ *		  pY  [out] int32_t pointer : pointer to rotated y co-ordinate.
+ *		  angle [in] int32_t Q29 format : angle can be either from -PI to PI, represented in signed Q29 format.
+ * \return void
+*/
 void dspLib_Math_Cordic(int32_t x_0, int32_t y_0, int32_t *pX, int32_t *pY, int32_t angle);
+/**
+ * function : dspLib_Math_Sin
+ * \brief function will find the value of sine for the given angle.
+ * \param angle [in] int32_t Q29 format: input angle form -PI to PI.
+ * \return value of sin(angle) in Q30 format.
+*/
 int32_t dspLib_Math_Sin(int32_t angle);
+/**
+ * function : dspLib_Math_Cos
+ * \brief function will find the value of cosine for the given angle.
+ * \param angle [in] int32_t Q29 format: input angle form -PI to PI.
+ * \return value of cos(angle) in Q30 format.
+*/
 int32_t dspLib_Math_Cos(int32_t angle);
 
 #endif
