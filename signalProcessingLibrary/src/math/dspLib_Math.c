@@ -30,6 +30,10 @@ static int32_t dspLib_MathCordic_Angles[] =
 	CORDIC_ANGLE_ITR23,
 	CORDIC_ANGLE_ITR24,
 	CORDIC_ANGLE_ITR25,
+	CORDIC_ANGLE_ITR26,
+	CORDIC_ANGLE_ITR27,
+	CORDIC_ANGLE_ITR28,
+	CORDIC_ANGLE_ITR29
 };
 /* CORDIC algorithm */
 void dspLib_Math_Cordic(int32_t x_0, int32_t y_0, int32_t *pX, int32_t *pY, int32_t angle) {
@@ -39,7 +43,7 @@ void dspLib_Math_Cordic(int32_t x_0, int32_t y_0, int32_t *pX, int32_t *pY, int3
 	 * z' = z - (d * atan((2^-n))) >> z' = z -/+ angle[n]
 	*/
 	int32_t x, y, z;
-	uint8_t cnt = 0;
+	uint8_t cnt, itr;
 	
 	while((angle >= PI_BY_2) || (angle <= -PI_BY_2)) {
 		if(angle >= PI_BY_2) {
@@ -64,8 +68,10 @@ void dspLib_Math_Cordic(int32_t x_0, int32_t y_0, int32_t *pX, int32_t *pY, int3
 	x = x_0;
 	y = y_0;
 	z = angle;
+	cnt = 0;
+	itr = 29;
 	
-	while(cnt < 19) {
+	while(cnt < itr) {
 		if(z > 0) {
 			x = x_0 - (y_0 >> cnt);
 			y = y_0 + (x_0 >> cnt);

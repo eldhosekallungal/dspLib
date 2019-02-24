@@ -52,7 +52,7 @@ uint32_t dspLib_Signals_Sin(uint32_t samplingFrequency, uint32_t phase, uint32_t
 	/* second half of second quadrant */
 	i_index = n_index + i_index;
 	N_sample = (phase_sample + numSamples) > pi ? 0 : pi - (phase_sample + numSamples);
-	for(i_sample = phase_sample; i_sample >= N_sample; i_sample--) {
+	for(i_sample = phase_sample; i_sample > N_sample; i_sample--) {
 		pOutSamples[i_index++] = dspLib_Math_Sin(angle * i_sample);
 	}
 	/* complete one half cycle */
@@ -68,7 +68,7 @@ uint32_t dspLib_Signals_Sin(uint32_t samplingFrequency, uint32_t phase, uint32_t
 	i_index = 0;
 	numSamples = numSamples - n_index;
 	while(i_index < numSamples) {
-		pOutSamples[n_index + i_index] = -pOutSamples[i_index];
+		pOutSamples[n_index + i_index] = -pOutSamples[i_index + 1];
 		i_index++;
 	}
 	

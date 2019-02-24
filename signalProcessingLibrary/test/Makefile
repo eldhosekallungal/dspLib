@@ -2,6 +2,8 @@ INCLUDE_PATH = -I"../inc/math"
 INCLUDE_PATH += -I"../inc/signals"
 CFLAGS = -g
 
+all : main_sine shared_lib
+
 main_sine : test_sine.o dspLib_Math.o dspLib_Signals.o
 	gcc $(CFLAGS) -o main_sine.exe test_sine.o dspLib_Math.o dspLib_Signals.o $(INCLUDE_PATH)
 
@@ -18,4 +20,4 @@ shared_lib : dspLib_Math.o dspLib_Signals.o
 	gcc -shared -o libDspLib.so dspLib_Math.o dspLib_Signals.o
 
 clean:
-	rm -rf *.o *.exe
+	rm -rf *.o *.so *.exe
