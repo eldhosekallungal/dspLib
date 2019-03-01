@@ -54,15 +54,45 @@ class dspLib():
 		axis[1].hist(sqnrArray, nPoints/10)
 		pyplot.savefig(resDir + 'test_dspLib_Math_Sin.png', dpi=300)
 
-	def plotSin(self, samplingFrequency, frequency, phase, numSamples):
-		self.lib.dspLib_Signals_Sin.argtypes = [ctypes.c_long, ctypes.c_long, ctypes.c_long, ctypes.c_int, ctypes.POINTER(ctypes.c_long)]
-		array = (ctypes.c_long * numSamples)()
-		ctypes.cast(array, ctypes.POINTER(ctypes.c_long))
-		phase = self.lib.dspLib_Signals_Sin(samplingFrequency, phase, frequency, numSamples, array);
+	def test_dspLib_Signals_Sin(self, samplingFrequency, frequency, phase, numSamples):
+		resDir = self.testResDir + '/dspLib_Signals_Sin/'
+		if(not os.path.isdir(resDir)):
+			os.mkdir(resDir)
+		self.lib.dspLib_Signals_Sin.argtypes = [ctypes.c_uint, ctypes.c_int, ctypes.c_uint, ctypes.c_ushort, ctypes.POINTER(ctypes.c_int)]
+		array = (ctypes.c_int * numSamples)()
+		ctypes.cast(array, ctypes.POINTER(ctypes.c_int))
+		self.lib.dspLib_Signals_Sin(samplingFrequency, phase, frequency, numSamples, array);
+		# values = sin(2*pi*f/fs*i + phase)
+		sqnrArray = [0]*numSamples
+		fSignal = [0]*numSamples
+		fqSignal = [0]*numSamples
 		samples = range(0, numSamples)
-		pyplot.plot(samples, array)
+		for i in samples:
+			fSignal[i] = math.sin((2*math.pi*(1.0*frequency/samplingFrequency)*i) + (1.0*phase/pow(2,29)))
+			fqSignal[i] = 1.0*array[i] / pow(2,30)
+			noise = fSignal[i] - fqSignal[i]
+			try:
+				sqnr = abs(fSignal[i]/noise)
+				sqnrArray[i] = 20.0*math.log10(sqnr)
+			except ValueError:
+				# the signal value is zero
+				sqnr = abs(1/noise)
+				sqnrArray[i] = 20.0*math.log10(sqnr)
+			except ZeroDivisionError:
+				# the noise is zero
+				sqnrArray[i] = (6.02 * 30) + 1.76		# maximum SQNR for Q30 format
+
+		fig, axis = pyplot.subplots(1, 2)
+		axis[0].set_ylim(-1, 1)
+		axis[1].set_ylim(0, 180)
+		axis[0].plot(samples, fqSignal)
+		axis[0].plot(samples, fSignal)
+		axis[1].plot(samples, sqnrArray)
 		pyplot.show()
+		pyplot.savefig(resDir + 'dspLib_Signals_Sin.png', dpi=300)
+
 
 if __name__ == "__main__":
 	a = dspLib()
-	a.test_dspLib_Math_Sin(1000
+#	a.test_dspLib_Math_Sin(1000)
+	a.test_dspLib_Signals_Sin(1024, 1, a.pi/4, 800);

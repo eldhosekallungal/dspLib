@@ -14,5 +14,5 @@
  *       1. Phase cannot be greater than PI/2
  *       2. Will not return the phase of next sample.
 */
-uint32_t dspLib_Signals_Sin(uint32_t samplingFrequency, uint32_t phase, uint32_t frequency, uint16_t numSamples, int32_t *pOutSamples);
+uint32_t dspLib_Signals_Sin(uint32_t samplingFrequency, int32_t phase, uint32_t frequency, uint16_t numSamples, int32_t *pOutSamples);
 #endif

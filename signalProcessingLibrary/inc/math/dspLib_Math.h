@@ -71,14 +71,29 @@
 #define CORDIC_GAIN_ITR23	652032874
 #define CORDIC_GAIN_ITR24	652032874
 #define CORDIC_GAIN_ITR25	652032874
+/* Data structures */
+/**
+ * \brief Data structure for signed 32 bit complex numbers
+*/
+typedef struct {
+	int32_t re;
+	int32_t im;
+} dspLibMathComplex_s32_t;
+/**
+ * \brief Data structure for signed 16 bit complex numbers
+*/
+typedef struct {
+	int16_t re;
+	int16_t im;
+} dspLibMathComplex_s16_t;
 /**
  * function : dspLib_Math_Cordic
  * \brief function will give the new rotated co-ordinates.
- * \param x_0 [in] int32_t : x co-ordinate.
- *		  y_0 [in] int32_t : y co-ordinate.
- *		  pX  [out] int32_t pointer : pointer to rotated x co-ordinate.
- *		  pY  [out] int32_t pointer : pointer to rotated y co-ordinate.
- *		  angle [in] int32_t Q29 format : angle can be either from -PI to PI, represented in signed Q29 format.
+ * \param x_0   [in]  int32_t : x co-ordinate.
+ * \param y_0   [in]  int32_t : y co-ordinate.
+ * \param pX    [out] int32_t pointer : pointer to rotated x co-ordinate.
+ * \param pY    [out] int32_t pointer : pointer to rotated y co-ordinate.
+ * \param angle [in]  int32_t Q29 format : angle can be either from -PI to PI, represented in signed Q29 format.
  * \return void
 */
 void dspLib_Math_Cordic(int32_t x_0, int32_t y_0, int32_t *pX, int32_t *pY, int32_t angle);
@@ -96,5 +111,17 @@ int32_t dspLib_Math_Sin(int32_t angle);
  * \return value of cos(angle) in Q30 format.
 */
 int32_t dspLib_Math_Cos(int32_t angle);
-
+/**
+ * function : dspLib_Math_ComplexExpPair
+ * \brief function will find the value of sine and cosine pair for the given angle.
+ * \param angle [in]  int32_t Q29 format: input angle form -PI to PI.
+ * \param pX    [out] int32_t pointer: Output of cos(angle) in Q30 format.
+ * \param pY    [out] int32_t pointer: Output of sin(angle) in Q30 format.
+ * \return NONE
+*/
+void dspLib_Math_ComplexExpPair(int32_t angle, int32_t *pX, int32_t *pY);
+/**
+ * function : dspLib_Math_FFT32
+*/
+void dspLib_Math_FFT32(dspLibMathComplex_s32_t *pInSamples, uint32_t numSamples, dspLibMathComplex_s32_t *pOutSamples);
 #endif
